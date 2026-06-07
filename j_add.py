@@ -185,14 +185,14 @@ class fry:
             self.px -= 10
         if self.act[3] == 'r':
             self.px += 10
-        if obj.status[1] > 0:
-            obj.status[1] -= 1
+        if self.status[1] > 0:
+            self.status[1] -= 1
         else:
-            obj.status[1] = 2
-            if obj.status[0] == 1:
-                obj.status[0] = 2
+            self.status[1] = 2
+            if self.status[0] == 1:
+                self.status[0] = 2
             else:
-                obj.status[0] = 1
+                self.status[0] = 1
 
 class egg:
     def __init__(self, tank, id, col, px, status, time, mt, ch1m, ch1p, ch2m, ch2p, ch3m, ch3p, ch4m, ch4p, z1, z2, attributes=None):
@@ -221,7 +221,7 @@ class egg:
             check = f_int.hatchcheck(self)
             if check == True:
                 if self.z1[6] == 'on' or self.z2[6] == 'on':
-                    if self.ch1m[11] == 'on' or ch1p[11] == 'on':
+                    if self.ch1m[11] == 'on' or self.ch1p[11] == 'on':
                         i = 1
                         h = 50
                         act = ['up', 'u', 'u', 'l', ]
@@ -270,8 +270,6 @@ class b:
                     obj.likes[5] = 40
                     if self.stage > 15:
                         obj.status[3] = 10
-                        obj.likes[3] == 0
-                        obj.likes[6] == 0
                         obj.likes[4] = 0
     def ininf(self):
         if self.h == None:
@@ -409,9 +407,9 @@ class an:
          else:
              self.act[3] = 'l'
          self.mem.insert(1, 'df')
-         self.cfix
+         self.cfix()
   def brupdate(self):
-      if self.z1[4] or self.z2[4] == 'f':
+      if self.z1[4] == 'f' or self.z2[4] == 'f':
           if self.status[10] < 100:
               self.status[10] += 1
   def metupdate(self):
@@ -470,9 +468,9 @@ class an:
                 if self.ch1m[1] == True or self.ch1p[1] == True:
                    minus -= 2
                 if self.ch1m[9][0] == True:
-                   minus -= ch1m[9][1]
+                   minus -= self.ch1m[9][1]
                 if self.ch1p[9][0] == True:
-                   minus -= ch1p[9][1]
+                   minus -= self.ch1p[9][1]
                 if self.act[1] == 'fast':
                     m_ = minus
                     minus = m_ + m_
