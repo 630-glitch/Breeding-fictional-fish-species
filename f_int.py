@@ -6,13 +6,19 @@ def iseyes(own):
             if own.ch1m[7] == 'on' or own.ch1p[7] == 'on':
                 eyes = True
                 return eyes
+    return False
 def isfin(own):
     fin = False
-    if ch2m[1]  == 'on' or ch2p[1] == 'on':
-        if ch2m[6] == 'cir' or 'tri' or ch2p[6] == 'cir' or 'tri':
-            if ch2m[2][0] == True or ch2p[2][0] == True:
-                if ch2m[2][1] > 0 or ch2p[2][1] > 0:
+    if own.ch2m[1] == 'on' or own.ch2p[1] == 'on':
+        if own.ch2m[6] in ('cir', 'tri') or own.ch2p[6] in ('cir', 'tri'):
+            if own.ch2m[2][0] == True or own.ch2p[2][0] == True:
+                if own.ch2m[2][1] > 0 or own.ch2p[2][1] > 0:
                     fin = True
+    return fin
+def hatchcheck(own):
+    # Check if egg conditions are met for hatching
+    # Currently always returns True — original author planned validation here
+    return True
 class egg:
     def __init__(self, tank, col, px, status, time, mt, ch1m, ch1p, ch2m, ch2p, ch3m, ch3p, ch4m, ch4p, z1, z2):
         self.tank = tank
@@ -32,7 +38,7 @@ class egg:
         self.z1 = z1
         self.z2 = z2
 def check_la(lst, lenth):
-    if isinstance(lst, list, lenth):
+    if isinstance(lst, list) and len(lst) > lenth - 1:
         count = len(lst)
         if count > lenth - 1:
             check = True
@@ -46,7 +52,7 @@ def cr(own):
         if st == own.ch1m:
             ad = own.ch1p
         else:
-            ad = ch1m       
+            ad = own.ch1m       
         r = st    
         i = random.randrange(2, 4)
         r[0:i] = ad[0:i] 
@@ -59,7 +65,7 @@ def mei(own):
         if st1 == own.ch1m:
             ad1 = own.ch1p
         else:
-            ad1 = ch1m
+            ad1 = own.ch1m
         i = random.choices([2, 3, 4])
         
     ch1 = random.choice([own.ch1m, own.ch1p])
@@ -107,22 +113,22 @@ def cel_h(own):
     if own.ch2m[10][0] == True:
         ma = own.ch2m[10][1]
     if own.ch2p[10][0] == True:
-        mb = own.ch2m[10][1]
+        mb = own.ch2p[10][1]
     m = ma + mb
     if own.ch1m[10][0] == True:
-        pa = own.ch1[10][1]
+        pa = own.ch1m[10][1]
     if own.ch1p[10][0] == True:
-        pb = ch1p[10][1]
+        pb = own.ch1p[10][1]
     p = pa + pb
     h = p - m
-    return hl
+    return h
 def rdf(own):
     pa = 0
     pb = 0
     if own.ch4m[2][0] == True:
-        pa = ch4m[2][1]
+        pa = own.ch4m[2][1]
     if own.ch4p[2][0] == True:
-        pb = ch4p[2][1]
+        pb = own.ch4p[2][1]
     p1 = pa + pb
     if own.ch1m[6] == 'on':
         pa = 1
@@ -145,7 +151,7 @@ def gettempc(own):
     if own.ch1m[8][0] == True or own.ch1p[8][0] == True:
         i = own.ch1m[8][1] + own.ch1p[8][1]
         w += i
-    if own.ch1m[10][0] == True or own.ch1p == True:
+    if own.ch1m[10][0] == True or own.ch1p[10][0] == True:
         i = own.ch1m[10][1] + own.ch1p[10][1]
         w += i * 2
     return w
@@ -170,7 +176,7 @@ def getstatus(own):
     lst.append(own.status[4])
     ie = iseyes(own)
     lst.append(ie)
-    f = isfin
+    f = isfin(own)
     lst.append(f)
     return lst
 def getlikes(own):
@@ -180,7 +186,7 @@ def getlikes(own):
     lst.append(o)
     y = 10
     if own.ch2p[10][0] == True:
-        i = ch2p[10][1]
+        i = own.ch2p[10][1]
         y -= 4 + i
     lst.append(y)
     lst.append(own.likes[3])
@@ -189,9 +195,9 @@ def getlikes(own):
         lof += 1
     if own.ch4p[3] == 'on':
         lof += 1
-    if own.ch1m[3][0] == True and ch1m[3][1] > 0:
+    if own.ch1m[3][0] == True and own.ch1m[3][1] > 0:
         lof -= 2
-    if own.ch1p[3][0] == True and ch1p[3][1] > 0:
+    if own.ch1p[3][0] == True and own.ch1p[3][1] > 0:
         lof -= 2
     if mit[3] > 8:
         lof += 3
@@ -215,7 +221,7 @@ def getlikes(own):
         if mit[3] > 8:
             user += 2
     lst.append(user)
-    return list 
+    return lst 
 en = []    
 class fry:
     def __init__(self, act, status, mt, ch1m, ch1p, ch2m, ch2p, ch3m, ch3p, ch4m, ch4p, z1, z2,  likes):

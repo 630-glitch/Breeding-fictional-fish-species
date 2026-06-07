@@ -121,7 +121,7 @@ def _draw(own, screen):
         fg = 250 * i
         fb = 0
     if own.ch2m[3][0] == True or own.ch2p[3][0] == True:
-        i = ch2m[3][1] + ch2p[3][1] - 1
+        i = own.ch2m[3][1] + own.ch2p[3][1] - 1
         fb -= 250 * i
         fg -= 100 * i
         fr += 10 * i
@@ -151,7 +151,7 @@ def _draw(own, screen):
         pygame.draw.arc(screen, fcolor, [own.px, dfy, 100, 100], math.radians(45), math.radians(135),30)   
     pygame.draw.ellipse( screen, owncolor, (own.px, own.py, 100, bwidth))                
 #mouth
-    i = ch4m[2][1] + ch4p[2][1] - 2 
+    i = own.ch4m[2][1] + own.ch4p[2][1] - 2 
     mwdth = 10 
     mwdth += i
     if own.ch4m[2][0] == True or own.ch4p[2][0] == True:
